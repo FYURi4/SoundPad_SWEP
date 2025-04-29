@@ -8,7 +8,7 @@ SWEP.Type = "anim"
 SWEP.Category = "3DEMC_SWEP"
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
-SWEP.ClassName = "X"
+SWEP.ClassName = "swep"
 SWEP.PrintName = "X"
 SWEP.Author = "FURA"
 SWEP.Contact = "Discord: fyurl4, Furushka: FurichF"
@@ -88,7 +88,7 @@ function SWEP:OpenSoundMenu()
             self.CurrentSoundPath = path 
             frame:Close()
             
-            net.Start("MellstroySWEP_SelectSound")
+            net.Start("SWEP_SelectSound")
                 net.WriteUInt(index, 8)
             net.SendToServer()
         end
@@ -96,11 +96,11 @@ function SWEP:OpenSoundMenu()
 end
 
 if SERVER then
-    util.AddNetworkString("MellstroySWEP_SelectSound")
+    util.AddNetworkString("SWEP_SelectSound")
     
-    net.Receive("MellstroySWEP_SelectSound", function(len, ply)
+    net.Receive("SWEP_SelectSound", function(len, ply)
         local wep = ply:GetActiveWeapon()
-        if IsValid(wep) and wep:GetClass() == "mellstroy_sweep" then
+        if IsValid(wep) and wep:GetClass() == "swep" then
             local index = net.ReadUInt(8)
             wep.CurrentSoundIndex = index
             wep.CurrentSoundPath = wep.SoundList[index]
